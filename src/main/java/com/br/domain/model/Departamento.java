@@ -25,37 +25,39 @@ import lombok.Setter;
 public class Departamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private boolean active;
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(max = 8, min = 6)
+
 	@NotNull
 	@NotBlank
-	@Column(name = "orgão")
-	private String orgão;
+	@Column(name = "orgao")
+	private String orgao;
 	
-	@Size(max = 8, min = 6)
+
 	@NotNull
 	@NotBlank
 	@JsonIgnore
 	@Column(name = "nome")
 	private String nome;
 	
-	@Size(max = 8, min = 6)
+	
 	@NotNull
 	@NotBlank
 	@Column(name = "sigla")
 	private String sigla;
 	
-	@Size(max = 8, min = 6)
+	
 	@NotNull
 	@NotBlank
 	@Column(name = "unidadePai")
 	private String unidadePai;
 	
-	@Size(max = 8, min = 6)
+	
 	@NotNull
 	@NotBlank
 	@Column(name = "localidade")
