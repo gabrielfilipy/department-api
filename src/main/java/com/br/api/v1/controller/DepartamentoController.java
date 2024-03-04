@@ -20,6 +20,7 @@ import com.br.api.v1.controller.mapper.DepartamentoModelMapper;
 import com.br.api.v1.controller.mapper.DepartamentoModelMapperBack;
 import com.br.api.v1.controller.model.DepartamentoModel;
 import com.br.api.v1.controller.model.input.DepartamentoModelInput;
+import com.br.domain.exception.DepartamentoNaoExisteException;
 import com.br.domain.model.Departamento;
 import com.br.domain.service.DepartamentoService;
 
@@ -69,6 +70,22 @@ public class DepartamentoController {
 		Departamento departamentoNew = departamentoService.save(departamento);
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoNew);
 	}
+	
+	@GetMapping("/buscar/{id}")
+	public ResponseEntity<Departamento> buscar(@PathVariable(name = "id") Long id) {
+		try {
+		Departamento departamento = departamentoService.findByID(id);
+		if (departamento != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(departamentoService.findByID(id));
+		} else {
+			throw new DepartamentoNaoExisteException("Departamento não encontrado com o ID: " + id);
+		}
+	} catch (DepartamentoNaoExisteException ex) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+  }	  catch (Exception ex) {
+	  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+  }
+}
 	
 	@PatchMapping("/ativar/{id}")
     public ResponseEntity<Departamento> activateDepartamento(@RequestBody Departamento departamento, @PathVariable(name = "id") Long id ) {

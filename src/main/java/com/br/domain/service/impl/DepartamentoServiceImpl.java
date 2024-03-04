@@ -1,10 +1,12 @@
 package com.br.domain.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.br.domain.exception.DepartamentoNaoExisteException;
 import com.br.domain.model.Departamento;
 import com.br.domain.repository.DepartamentoRepository;
 import com.br.domain.service.DepartamentoService;
@@ -39,6 +41,15 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	@Override
 	public List<Departamento> findAll() {
 		return departamentoRepository.findAll();
+	}
+	@Override
+	public Departamento findByID(Long id) {
+		Optional<Departamento> departamentoNew = departamentoRepository.findById(id);
+		if(departamentoNew.isPresent()) {
+			return departamentoNew.get();
+		} else {
+			throw new DepartamentoNaoExisteException("Departamento não encontrado com o ID: " + id);
+		}
 	}
 	
 	
