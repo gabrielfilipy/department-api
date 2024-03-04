@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.api.v1.controller.mapper.DepartamentoModelMapper;
-import com.br.api.v1.controller.mapper.DepartamentoModelMapperBack;
-import com.br.api.v1.controller.model.DepartamentoModel;
-import com.br.api.v1.controller.model.input.DepartamentoModelInput;
+import com.br.api.v1.mapper.DepartamentoModelMapper;
+import com.br.api.v1.mapper.DepartamentoModelMapperBack;
+import com.br.api.v1.model.DepartamentoModel;
+import com.br.api.v1.model.input.DepartamentoModelInput;
 import com.br.domain.model.Departamento;
 import com.br.domain.service.DepartamentoService;
 

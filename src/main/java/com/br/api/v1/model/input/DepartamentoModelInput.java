@@ -1,4 +1,4 @@
-package com.br.api.v1.controller.model.input;
+package com.br.api.v1.model.input;
 
 import lombok.Getter;
 import lombok.Setter;
