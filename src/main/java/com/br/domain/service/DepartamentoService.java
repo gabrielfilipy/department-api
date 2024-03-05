@@ -10,4 +10,5 @@ public interface DepartamentoService {
 	Departamento deactivateDepartamento(Long id);
 	Departamento activaDepartamento(Long id);
 	List<Departamento> findAll();
+	Departamento findById(Long id);
 }

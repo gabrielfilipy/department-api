@@ -15,26 +15,24 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Table(name = "TBL_DEPARTAMENTO")
 @Entity
 public class Departamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private boolean active;
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-
-	@NotNull
-	@NotBlank
+	private boolean active;
+	 
 	@Column(name = "orgao")
 	private String orgao;
 	

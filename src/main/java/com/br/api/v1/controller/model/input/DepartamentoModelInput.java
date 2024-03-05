@@ -1,17 +1,25 @@
 package com.br.api.v1.controller.model.input;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class DepartamentoModelInput {
-	
-    private String orgao;
+    
+	private boolean active;
+	private String orgao;
+	@NotNull
+	@NotBlank
 	private String nome;
+	@NotNull
+	@NotBlank
 	private String sigla;
+	@NotNull
+	@NotBlank
 	private String unidadePai;
+	@NotNull
+	@NotBlank
 	private String localidade;
-	
 	
 }
