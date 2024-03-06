@@ -30,7 +30,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.br.domain.exception.EntidadeEmUsoException;
-import com.br.domain.exception.DepartamentoNaoExisteException;
+import com.br.domain.exception.EntidadeNaoExisteException;
 import com.br.domain.exception.RegraDeNegocioException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
@@ -51,8 +51,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(status).headers(headers).build();
 	}
 	
-	@ExceptionHandler(DepartamentoNaoExisteException.class)
-	public ResponseEntity<?> handleEntidadeNaoExisteException(DepartamentoNaoExisteException ex, WebRequest request) {
+	@ExceptionHandler(EntidadeNaoExisteException.class)
+	public ResponseEntity<?> handleEntidadeNaoExisteException(EntidadeNaoExisteException ex, WebRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		TipoDoProblema tipoProblema = TipoDoProblema.RECURSO_NAO_ENCONTRADO;
 		String detail = ex.getMessage();

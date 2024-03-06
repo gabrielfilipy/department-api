@@ -26,12 +26,12 @@ public class Departamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private boolean active;
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private boolean active;
 
 	@NotNull
 	@NotBlank
