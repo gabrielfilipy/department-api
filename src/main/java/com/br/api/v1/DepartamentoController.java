@@ -1,6 +1,6 @@
-package com.br.api.v1.controller;
-
+package com.br.api.v1;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.br.api.v1.controller.mapper.DepartamentoModelMapper;
-import com.br.api.v1.controller.mapper.DepartamentoModelMapperBack;
+import com.br.api.v1.controller.mapper.DepartamentoModelCopy;
+import com.br.api.v1.controller.mapper.DepartamentoModelMapeerBack;
 import com.br.api.v1.controller.model.DepartamentoModel;
 import com.br.api.v1.controller.model.input.DepartamentoModelInput;
 import com.br.domain.model.Departamento;
 import com.br.domain.service.DepartamentoService;
-
 import io.swagger.annotations.Api;
 
 @Api(tags ="departamento")
@@ -34,12 +33,10 @@ public class DepartamentoController {
 	@Autowired
 	DepartamentoModelMapper departamentoModelMapper;
 	@Autowired
-	DepartamentoModelMapperBack departamentoModelMapperBack;
+	DepartamentoModelMapeerBack departamentoModelMapeerBack;
+	@Autowired
+	DepartamentoModelCopy departamentoModelCopy;
 
-//	@GetMapping("/listar")
-//	public ResponseEntity<List<Departamento>> getUsers() {
-//		return ResponseEntity.status(HttpStatus.OK).body(null);
-//	}
 	
 //	@GetMapping("/buscar/{id}")
 //	public ResponseEntity<Departamento> getUser(@PathVariable(name = "id") Long id) {
@@ -51,45 +48,42 @@ public class DepartamentoController {
 //		
 //	}
 	@GetMapping("/listar")
-	public ResponseEntity<List<Departamento>> getUsers() {
-		return ResponseEntity.status(HttpStatus.OK).body(departamentoService.findAll());
+	public ResponseEntity<List<DepartamentoModel>> getDepartamentos() {
+		List<Departamento> departamentos = departamentoService.findAll();
+		List<DepartamentoModel> departamentoModel = departamentos.stream()
+				.map(departamentoModelMapper::toModel)
+				.collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(departamentoModel);
 	}
 	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<DepartamentoModel> cadastrar(@RequestBody @Valid DepartamentoModelInput departamentoModelInput) {
-		Departamento departamento = departamentoModelMapperBack.toModel(departamentoModelInput);
+		Departamento departamento = departamentoModelMapeerBack.toModel(departamentoModelInput);
 		DepartamentoModel departamentoModel = departamentoModelMapper.toModel(departamentoService.save(departamento));
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModel);
 	}
 	
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<Departamento> editar(@RequestBody Departamento departamento, 
+	public ResponseEntity<DepartamentoModel> editar(@RequestBody DepartamentoModelInput departamentoModelInput, 
 			@PathVariable(name = "id") Long id) {
-		departamento.setId(id);
-		Departamento departamentoNew = departamentoService.save(departamento);
-		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoNew);
+		Departamento departamentoAtual = departamentoService.findById(id);
+		departamentoModelCopy.copyToDomainObject(departamentoModelInput, departamentoAtual);
+		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.save(departamentoAtual)));
 	}
-	
+	  
 	@PatchMapping("/ativar/{id}")
-    public ResponseEntity<Departamento> activateDepartamento(@RequestBody Departamento departamento, @PathVariable(name = "id") Long id ) {
-		departamento.setId(id);
-		Departamento departamentoNew = departamentoService.activaDepartamento(id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoNew);
-    
+    public ResponseEntity<DepartamentoModel> activateDepartamento(@RequestBody DepartamentoModelInput departamentoModelInput, @PathVariable(name = "id") Long id ) {
+		Departamento departamento = departamentoService.findById(id);
+		departamentoModelCopy.copyToDomainObject(departamentoModelInput, departamento);
+		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.activaDepartamento(id)));
+	    
  }
    @PutMapping("/desativar/{id}")
-    public ResponseEntity<Departamento> deactivateDepartamento(@RequestBody Departamento departamento, @PathVariable(name = "id") Long id ) {
-	   departamento.setId(id);
-	   Departamento departamentoNew = departamentoService.deactivateDepartamento(id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoNew);
+   public ResponseEntity<DepartamentoModel> deactivateDepartamento(@RequestBody DepartamentoModelInput departamentoModelInput, @PathVariable(name = "id") Long id ) {
+		Departamento departamento = departamentoService.findById(id);
+		departamentoModelCopy.copyToDomainObject(departamentoModelInput, departamento);
+		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.deactivateDepartamento(id)));
     }
 
-//	}
-//	
-//	@PutMapping("/editar/{id}")
-//	public ResponseEntity<UserModel> editar(@RequestBody UserModelInput userModelInput, 
-//			@PathVariable(name = "id") Long id) {
-//		return null;
-//	}
-//	
+
 }

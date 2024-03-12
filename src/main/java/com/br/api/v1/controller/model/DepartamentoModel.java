@@ -1,10 +1,8 @@
 package com.br.api.v1.controller.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class DepartamentoModel {
 	
     private String orgao;
