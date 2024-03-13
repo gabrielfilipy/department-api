@@ -1,4 +1,5 @@
-package com.br.api.v1;
+package com.br.api.v1.controller;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,22 +13,25 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.br.api.v1.controller.mapper.DepartamentoModelMapper;
-import com.br.api.v1.controller.mapper.DepartamentoModelCopy;
-import com.br.api.v1.controller.mapper.DepartamentoModelMapeerBack;
-import com.br.api.v1.controller.model.DepartamentoModel;
-import com.br.api.v1.controller.model.input.DepartamentoModelInput;
+
+import com.br.api.v1.mapper.DepartamentoModelCopy;
+import com.br.api.v1.mapper.DepartamentoModelMapeerBack;
+import com.br.api.v1.mapper.DepartamentoModelMapper;
+import com.br.api.v1.model.DepartamentoModel;
+import com.br.api.v1.model.input.DepartamentoModelInput;
 import com.br.domain.model.Departamento;
 import com.br.domain.service.DepartamentoService;
+
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @Api(tags ="departamento")
 @RestController
 @RequestMapping("/v1/departamento")
 public class DepartamentoController {
+
 	@Autowired
 	DepartamentoService departamentoService;
 	@Autowired
@@ -84,6 +88,4 @@ public class DepartamentoController {
 		departamentoModelCopy.copyToDomainObject(departamentoModelInput, departamento);
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.deactivateDepartamento(id)));
     }
-
-
 }
