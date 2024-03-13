@@ -1,12 +1,13 @@
-package com.br.api.v1.controller.model.input;
+package com.br.api.v1.model.input;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
 
+import lombok.Data;
 
 @Data
 public class DepartamentoModelInput {
-    
+
 	private boolean active;
 	private String orgao;
 	@NotNull
@@ -21,5 +22,4 @@ public class DepartamentoModelInput {
 	@NotNull
 	@NotBlank
 	private String localidade;
-	
 }

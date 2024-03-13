@@ -1,13 +1,15 @@
-package com.br.api.v1.controller.mapper;
+package com.br.api.v1.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.br.api.v1.controller.model.DepartamentoModel;
+
+import com.br.api.v1.model.DepartamentoModel;
 import com.br.domain.model.Departamento;
 
-@Component
+@Component	
 public class DepartamentoModelMapper {
+
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -18,6 +20,4 @@ public class DepartamentoModelMapper {
 		
 		
 	}
-	
-
 }
