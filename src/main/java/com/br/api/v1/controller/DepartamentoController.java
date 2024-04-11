@@ -16,6 +16,7 @@ import com.br.domain.service.DepartamentoService;
 import io.swagger.annotations.Api;
 
 @Api(tags ="departamento")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/v1/department")
 public class DepartamentoController {

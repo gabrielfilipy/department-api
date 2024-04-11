@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class DepartamentoModel {
-	
+
+	private Long id;
     private String orgao;
 	private String nome;
 	private String sigla;

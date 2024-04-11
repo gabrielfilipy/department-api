@@ -14,7 +14,6 @@ com/br/api/v1/mapper/DepartamentoModelMapeerBack.class
 com/br/api/exceptionhandler/ApiExceptionHandler.class
 com/br/api/exceptionhandler/Problema$Object.class
 com/br/DepartamentoApiApplication.class
-com/br/api/v1/mapper/DepartamentoModelCopy.class
 com/br/core/modelmapper/ModelMapperConfig.class
 com/br/core/openapi/SpringfoxConfig.class
 com/br/domain/exception/EntidadeNaoExisteException.class

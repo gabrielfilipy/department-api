@@ -8,7 +8,6 @@
 /home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/api/v1/model/input/DepartamentoModelInput.java
 /home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/core/modelmapper/ModelMapperConfig.java
 /home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/domain/model/Departamento.java
-/home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/api/v1/mapper/DepartamentoModelCopy.java
 /home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/DepartamentoApiApplication.java
 /home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/api/v1/mapper/DepartamentoModelMapeerBack.java
 /home/gabrielfilipy/opt/workspace/department-api/src/main/java/com/br/domain/service/DepartamentoService.java
