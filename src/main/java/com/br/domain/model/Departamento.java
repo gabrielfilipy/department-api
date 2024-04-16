@@ -25,7 +25,6 @@ import lombok.Setter;
 public class Departamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -35,26 +34,21 @@ public class Departamento implements Serializable {
 	 
 	@Column(name = "orgao")
 	private String orgao;
-	
 
 	@NotNull
 	@NotBlank
-	@JsonIgnore
 	@Column(name = "nome")
 	private String nome;
-	
-	
+
 	@NotNull
 	@NotBlank
 	@Column(name = "sigla")
 	private String sigla;
-	
-	
+
 	@NotNull
 	@NotBlank
 	@Column(name = "unidadePai")
 	private String unidadePai;
-	
 	
 	@NotNull
 	@NotBlank

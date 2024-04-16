@@ -11,5 +11,6 @@ public class DepartamentoModel {
 	private String sigla;
 	private String unidadePai;
 	private String localidade;
+	private boolean active;
 
 }

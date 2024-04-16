@@ -1,9 +1,11 @@
 package com.br.domain.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.br.domain.exception.EntidadeNaoExisteException;
@@ -18,19 +20,20 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	DepartamentoRepository departamentoRepository;
 
 	@Override
-	public Departamento activaDepartamento(Long id) {
+	public Departamento activaDepartamento(Long id, Boolean active) {
 		Departamento departamento = departamentoRepository.findById(id)
-	                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-	        departamento.setActive(true);
-	        return departamentoRepository.save(departamento);
-	    }
+	                .orElseThrow(() -> new RuntimeException("Departamento não encontrado."));
+		departamento.setActive(active);
+		return departamentoRepository.save(departamento);
+	}
+
     @Override
-		public Departamento deactivateDepartamento (Long id) {
+	public Departamento deactivateDepartamento (Long id) {
 		Departamento departamento = departamentoRepository.findById(id)
-	                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-	        departamento.setActive(false);
-	        return departamentoRepository.save(departamento);
-	    }
+	                .orElseThrow(() -> new RuntimeException("Departamento não encontrado."));
+		departamento.setActive(false);
+		return departamentoRepository.save(departamento);
+	}
     
 	@Override
 	public Departamento save (Departamento departamento) {
@@ -38,11 +41,10 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 			departamento.setActive(true);
 		return departamentoRepository.save(departamento);
 	}
-	
 
 	@Override
-	public List<Departamento> findAll() {
-		return departamentoRepository.findAll();
+	public Page<Departamento> findAll(Specification<Departamento> spec, Pageable pageable) {
+		return departamentoRepository.findAll(spec, pageable);
 	}
 	
 	@Override

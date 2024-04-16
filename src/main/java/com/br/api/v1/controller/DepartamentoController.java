@@ -5,12 +5,18 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.br.api.v1.mapper.DepartamentoModelMapper;
+import com.br.api.v1.model.input.DepartamentoModelInput;
+import com.br.domain.service.spec.TemplateSpec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import com.br.api.v1.mapper.DepartamentoModelMapeerBack;
 import com.br.api.v1.model.DepartamentoModel;
-import com.br.api.v1.model.input.DepartamentoModelInput;
+import com.br.api.v1.model.input.DepartamentoActiveModelInput;
 import com.br.domain.model.Departamento;
 import com.br.domain.service.DepartamentoService;
 import io.swagger.annotations.Api;
@@ -35,12 +41,9 @@ public class DepartamentoController {
 	}
 
 	@GetMapping("/listar")
-	public ResponseEntity<List<DepartamentoModel>> getDepartamentos() {
-		List<Departamento> departamentos = departamentoService.findAll();
-		List<DepartamentoModel> departamentoModel = departamentos.stream()
-				.map(departamentoModelMapper::toModel)
-				.collect(Collectors.toList());
-		return ResponseEntity.status(HttpStatus.OK).body(departamentoModel);
+	public ResponseEntity<Page<Departamento>> getDepartamentos(TemplateSpec.DepartmentSpec spec,
+																	@PageableDefault(page = 0, size = 5) Pageable pageable) {
+		return ResponseEntity.status(HttpStatus.OK).body(departamentoService.findAll(spec, pageable));
 	}
 	
 	@PostMapping("/cadastrar")
@@ -51,19 +54,22 @@ public class DepartamentoController {
 	}
 	
 	@PutMapping("/editar/{id}")
-	public ResponseEntity<DepartamentoModel> editar(@RequestBody DepartamentoModelInput departamentoModelInput, 
+	public ResponseEntity<DepartamentoModel> editar(@RequestBody DepartamentoModelInput departamentoModelInput,
 			@PathVariable(name = "id") Long id) {
 		Departamento departamentoAtual = departamentoService.findById(id);
 		departamentoModelMapeerBack.copyToDomainObject(departamentoModelInput, departamentoAtual);
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.save(departamentoAtual)));
 	}
 	  
-	@PatchMapping("/ativar/{id}")
-    public ResponseEntity<DepartamentoModel> activateDepartamento(@RequestBody DepartamentoModelInput departamentoModelInput, @PathVariable(name = "id") Long id ) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.activaDepartamento(id)));
+	@PatchMapping("/ativar-desativar/{id}")
+    public ResponseEntity<DepartamentoModel> activateDepartamento(@RequestBody DepartamentoActiveModelInput departamentoActiveModelInput,
+																  @PathVariable(name = "id") Long id ) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(
+				departamentoModelMapper.toModel(departamentoService.activaDepartamento(id, departamentoActiveModelInput.isActive())));
  	}
-   @PutMapping("/desativar/{id}")
-   public ResponseEntity<DepartamentoModel> deactivateDepartamento(@RequestBody DepartamentoModelInput departamentoModelInput, @PathVariable(name = "id") Long id ) {
+
+    @PutMapping("/desativar/{id}")
+    public ResponseEntity<DepartamentoModel> deactivateDepartamento(@RequestBody DepartamentoActiveModelInput departamentoActiveModelInput, @PathVariable(name = "id") Long id ) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.deactivateDepartamento(id)));
 	}
 
