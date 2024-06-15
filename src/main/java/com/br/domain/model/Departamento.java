@@ -33,7 +33,7 @@ public class Departamento implements Serializable {
 	private boolean active;
 	 
 	@Column(name = "orgao")
-	private String orgao;
+	private Long orgaoId;
 
 	@NotNull
 	@NotBlank

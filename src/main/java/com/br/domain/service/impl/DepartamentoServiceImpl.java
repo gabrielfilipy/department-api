@@ -37,6 +37,13 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     
 	@Override
 	public Departamento save (Departamento departamento) {
+		String nomeCompleto = departamento.getNome();
+		String[] palavras = nomeCompleto.split("\\s+");
+		int indiceUltimaPalavra = palavras.length - 1;
+		String ultimaPalavra = palavras[indiceUltimaPalavra].substring(0,  2);
+		String primeiraPalavra = nomeCompleto.substring(0,  2);
+		String sigla = primeiraPalavra + ultimaPalavra;
+		departamento.setSigla(sigla);
 		if(departamento.getId() == null) 
 			departamento.setActive(true);
 		return departamentoRepository.save(departamento);

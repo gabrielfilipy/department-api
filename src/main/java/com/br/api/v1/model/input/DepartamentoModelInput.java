@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class DepartamentoModelInput {
 
     private boolean active;
-    private String orgao;
+    private Long orgaoId;
     @NotNull
     @NotBlank
     private String nome;

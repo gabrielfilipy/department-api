@@ -6,7 +6,7 @@ import lombok.Data;
 public class DepartamentoModel {
 
 	private Long id;
-    private String orgao;
+	private Long orgaoId;
 	private String nome;
 	private String sigla;
 	private String unidadePai;
