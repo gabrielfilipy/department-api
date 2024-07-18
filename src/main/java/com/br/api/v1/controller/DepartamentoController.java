@@ -1,16 +1,16 @@
 package com.br.api.v1.controller;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import com.br.api.v1.mapper.DepartamentoModelMapper;
 import com.br.api.v1.model.input.DepartamentoModelInput;
 import com.br.domain.service.spec.TemplateSpec;
+
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +35,9 @@ public class DepartamentoController {
 	@Autowired
 	private DepartamentoModelMapeerBack departamentoModelMapeerBack;
 	
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
+	
 	@GetMapping("/buscar/{id}")
 	public ResponseEntity<DepartamentoModel> getUser(@PathVariable(name = "id") Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(departamentoModelMapper.toModel(departamentoService.findById(id)));
@@ -50,6 +53,11 @@ public class DepartamentoController {
 	public ResponseEntity<DepartamentoModel> cadastrar(@RequestBody @Valid DepartamentoModelInput departamentoModelInput) {
 		Departamento departamento = departamentoModelMapeerBack.toModel(departamentoModelInput);
 		DepartamentoModel departamentoModel = departamentoModelMapper.toModel(departamentoService.save(departamento));
+		
+		String routingKey = "department-created";
+		Message message = new Message(departamentoModel.getId().toString().getBytes());
+		rabbitTemplate.convertAndSend(routingKey, departamentoModel);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModel);
 	}
 	
