@@ -5,6 +5,14 @@ spring:
     url: jdbc:mysql://localhost:3306/department-api?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password:
+  rabbitmq:
+    host: jackal.rmq.cloudamqp.com
+    port: 5672
+    username: vzrysyzb
+    password: 5mbiRHNi_CXv4na6zFhmhEhzWz-MlDPD
+    virtual-host: vzrysyzb
+    ssl:
+      enabled: false
   jpa:
     hibernate:
       ddl-auto: update
