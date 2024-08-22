@@ -10,11 +10,11 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   rabbitmq:
-    host: jackal.rmq.cloudamqp.com
+    host: chimpanzee.rmq.cloudamqp.com
     port: 5672
-    username: vzrysyzb
-    password: 5mbiRHNi_CXv4na6zFhmhEhzWz-MlDPD
-    virtual-host: vzrysyzb
+    username: iobowxcf
+    password: ir7KHgKnCDj2zhBizzrR-u30P_LfWBfr
+    virtual-host: iobowxcf
     ssl:
       enabled: false
 
