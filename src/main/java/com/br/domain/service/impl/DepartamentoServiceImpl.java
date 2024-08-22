@@ -1,6 +1,7 @@
 package com.br.domain.service.impl;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	DepartamentoRepository departamentoRepository;
 
 	@Override
-	public Departamento activaDepartamento(Long id, Boolean active) {
+	public Departamento activaDepartamento(UUID id, Boolean active) {
 		Departamento departamento = departamentoRepository.findById(id)
 	                .orElseThrow(() -> new RuntimeException("Departamento não encontrado."));
 		departamento.setActive(active);
@@ -28,7 +29,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	}
 
     @Override
-	public Departamento deactivateDepartamento (Long id) {
+	public Departamento deactivateDepartamento (UUID id) {
 		Departamento departamento = departamentoRepository.findById(id)
 	                .orElseThrow(() -> new RuntimeException("Departamento não encontrado."));
 		departamento.setActive(false);
@@ -44,7 +45,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 		String primeiraPalavra = nomeCompleto.substring(0,  2);
 		String sigla = primeiraPalavra + ultimaPalavra;
 		departamento.setSigla(sigla);
-		if(departamento.getId() == null) 
+		if(departamento.getDepartamentoId() == null) 
 			departamento.setActive(true);
 		return departamentoRepository.save(departamento);
 	}
@@ -55,7 +56,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	}
 	
 	@Override
-	public Departamento findById(Long id) {
+	public Departamento findById(UUID id) {
 		Optional<Departamento> departamento = departamentoRepository.findById(id);
 		if(departamento.isEmpty()) {
 			throw new EntidadeNaoExisteException("Usuário informado não existe: " + id);
