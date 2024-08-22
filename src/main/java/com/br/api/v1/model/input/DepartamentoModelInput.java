@@ -1,18 +1,15 @@
 package com.br.api.v1.model.input;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.UUID;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
 public class DepartamentoModelInput {
 
     private boolean active;
-    private Long orgaoId;
+    private UUID orgaoId;
     @NotNull
     @NotBlank
     private String nome;

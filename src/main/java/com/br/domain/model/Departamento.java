@@ -1,23 +1,12 @@
 package com.br.domain.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @Table(name = "TBL_DEPARTAMENTO")
@@ -27,13 +16,13 @@ public class Departamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue( strategy = GenerationType.AUTO)
+	private UUID departamentoId;
 	
 	private boolean active;
 	 
-	@Column(name = "orgao")
-	private Long orgaoId;
+	@Column(name = "orgao_id")
+	private UUID orgaoId;
 
 	@NotNull
 	@NotBlank

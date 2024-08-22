@@ -1,5 +1,7 @@
 package com.br.api.v1.controller;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import com.br.api.v1.mapper.DepartamentoModelMapper;
@@ -39,7 +41,7 @@ public class DepartamentoController {
 	private RabbitTemplate rabbitTemplate;
 	
 	@GetMapping("/buscar/{id}")
-	public ResponseEntity<DepartamentoModel> getUser(@PathVariable(name = "id") Long id) {
+	public ResponseEntity<DepartamentoModel> getUser(@PathVariable(name = "id") UUID id) {
 		return ResponseEntity.status(HttpStatus.OK).body(departamentoModelMapper.toModel(departamentoService.findById(id)));
 	}
 
@@ -55,7 +57,7 @@ public class DepartamentoController {
 		DepartamentoModel departamentoModel = departamentoModelMapper.toModel(departamentoService.save(departamento));
 		
 		String routingKey = "department-created";
-		Message message = new Message(departamentoModel.getId().toString().getBytes());
+		Message message = new Message(departamentoModel.getDepartamentoId().toString().getBytes());
 		rabbitTemplate.convertAndSend(routingKey, departamentoModel);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModel);
@@ -63,7 +65,7 @@ public class DepartamentoController {
 	
 	@PutMapping("/editar/{id}")
 	public ResponseEntity<DepartamentoModel> editar(@RequestBody DepartamentoModelInput departamentoModelInput,
-			@PathVariable(name = "id") Long id) {
+			@PathVariable(name = "id") UUID id) {
 		Departamento departamentoAtual = departamentoService.findById(id);
 		departamentoModelMapeerBack.copyToDomainObject(departamentoModelInput, departamentoAtual);
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.save(departamentoAtual)));
@@ -71,13 +73,13 @@ public class DepartamentoController {
 	  
 	@PatchMapping("/ativar-desativar/{id}")
     public ResponseEntity<DepartamentoModel> activateDepartamento(@RequestBody DepartamentoActiveModelInput departamentoActiveModelInput,
-																  @PathVariable(name = "id") Long id ) {
+																  @PathVariable(name = "id") UUID id ) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(
 				departamentoModelMapper.toModel(departamentoService.activaDepartamento(id, departamentoActiveModelInput.isActive())));
  	}
 
     @PutMapping("/desativar/{id}")
-    public ResponseEntity<DepartamentoModel> deactivateDepartamento(@RequestBody DepartamentoActiveModelInput departamentoActiveModelInput, @PathVariable(name = "id") Long id ) {
+    public ResponseEntity<DepartamentoModel> deactivateDepartamento(@RequestBody DepartamentoActiveModelInput departamentoActiveModelInput, @PathVariable(name = "id") UUID id ) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModelMapper.toModel(departamentoService.deactivateDepartamento(id)));
 	}
 
