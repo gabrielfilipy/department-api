@@ -8,7 +8,6 @@ import com.br.api.v1.mapper.DepartamentoModelMapper;
 import com.br.api.v1.model.input.DepartamentoModelInput;
 import com.br.domain.service.spec.TemplateSpec;
 
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,10 +54,9 @@ public class DepartamentoController {
 	public ResponseEntity<DepartamentoModel> cadastrar(@RequestBody @Valid DepartamentoModelInput departamentoModelInput) {
 		Departamento departamento = departamentoModelMapeerBack.toModel(departamentoModelInput);
 		DepartamentoModel departamentoModel = departamentoModelMapper.toModel(departamentoService.save(departamento));
-		
-		String routingKey = "department-created";
-		Message message = new Message(departamentoModel.getDepartamentoId().toString().getBytes());
-		rabbitTemplate.convertAndSend(routingKey, departamentoModel);
+
+		rabbitTemplate.convertAndSend("department-user", departamentoModel);
+		rabbitTemplate.convertAndSend("department-document", departamentoModel);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(departamentoModel);
 	}

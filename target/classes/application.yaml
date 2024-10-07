@@ -12,9 +12,9 @@ spring:
   rabbitmq:
     host: chimpanzee.rmq.cloudamqp.com
     port: 5672
-    username: iobowxcf
-    password: ir7KHgKnCDj2zhBizzrR-u30P_LfWBfr
-    virtual-host: iobowxcf
+    username: guiipcih
+    password: rmi0aARlI9gqXyW1t0sZ6nmyS0jXF50M
+    virtual-host: guiipcih
     ssl:
       enabled: false
 
