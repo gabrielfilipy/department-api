@@ -14,8 +14,12 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 	@Bean
 	public Queue queue() {
-		return new Queue("department-created"); //Existe alguns padrões defendidos: User.v1.user-created.
+		return new Queue("department-user"); //Existe alguns padrões defendidos: User.v1.user-created.
 		//nome do domínio{User}, versão do evento{v1}, e o tipo do evento{user-created}.
+	}
+	@Bean
+	public Queue queueDocument() {
+		return new Queue("department-document");
 	}
 	
 	@Bean
