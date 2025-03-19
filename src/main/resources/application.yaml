@@ -1,19 +1,28 @@
+
 server:
-  port: 8761
+  port: 8081
+
 spring:
-  application:
-    name: sim-service-registry
-management:
-  endpoint:
-    health:
-      show-details: always
-eureka:
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
-    serviceUrl:
-      defaultZone: ${ENVIRONMENT_SERVICE_REGISTRY:http://localhost:8761/eureka/}
-  instance:
-    hostname: ${CLUSTER_SERVICE_REGISTRY:localhost}
-    preferIpAddress: false
-    nonSecurePort: 80
+  datasource:
+    url: jdbc:postgresql://localhost:5432/department-api
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  rabbitmq:
+    host: chimpanzee.rmq.cloudamqp.com
+    port: 5672
+    username: iobowxcf
+    password: ir7KHgKnCDj2zhBizzrR-u30P_LfWBfr
+    virtual-host: iobowxcf
+    ssl:
+      enabled: false
+
+  jpa:
+    hibernate:
+      #ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      
+flyway:
+  locations: classpath:db/migration
+  baseline-on-migrate: true
