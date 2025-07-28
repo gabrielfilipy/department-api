@@ -51,8 +51,8 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 	}
 
 	@Override
-	public Page<Departamento> findAll(Specification<Departamento> spec, Pageable pageable) {
-		return departamentoRepository.findAll(spec, pageable);
+	public Page<Departamento> findAll(Pageable pageable) {
+		return departamentoRepository.findAll(pageable);
 	}
 	
 	@Override
@@ -63,6 +63,5 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 		}
 		return departamento.get();
 	}
-	
 	
 }
